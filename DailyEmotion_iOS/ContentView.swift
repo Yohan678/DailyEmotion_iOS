@@ -11,7 +11,9 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-
+    
+    @State private var isShowingSheet: Bool = false
+    
     var body: some View {
         NavigationSplitView {
             List {
@@ -29,7 +31,9 @@ struct ContentView: View {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button{
+                        isShowingSheet = true
+                    } label: {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
@@ -37,11 +41,14 @@ struct ContentView: View {
         } detail: {
             Text("Select an item")
         }
+        .sheet(isPresented: $isShowingSheet) {
+            NewEmotionView()
+        }
     }
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
+            let newItem = Item(timestamp: Date(), emotion: "Good")
             modelContext.insert(newItem)
         }
     }

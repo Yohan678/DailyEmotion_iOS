@@ -11,9 +11,10 @@ import SwiftData
 @Model
 final class Item {
     var timestamp: Date
-    var emotion: [String] = ["👍", "👎", "✌️"]
+    var emotion: String
     
-    init(timestamp: Date, emotion: [String]) {
+    init(timestamp: Date, emotion: String) {
         self.timestamp = timestamp
+        self.emotion = emotion
     }
 }
