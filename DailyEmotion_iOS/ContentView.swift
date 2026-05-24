@@ -21,7 +21,13 @@ struct ContentView: View {
                     NavigationLink {
                         Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
                     } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        VStack(alignment: .leading) {
+                            Text(item.emotion)
+                                .font(.system(size: 50))
+                                .padding()
+                            
+                            Text(item.timestamp, format: Date.FormatStyle(date: .abbreviated, time: .shortened))
+                        }
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -43,13 +49,6 @@ struct ContentView: View {
         }
         .sheet(isPresented: $isShowingSheet) {
             NewEmotionView()
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date(), emotion: "Good")
-            modelContext.insert(newItem)
         }
     }
 
